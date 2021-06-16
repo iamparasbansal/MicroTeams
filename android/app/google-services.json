@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "69759200454",
+    "project_id": "microteams-e16f7",
+    "storage_bucket": "microteams-e16f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69759200454:android:afa105f200f72132017bc7",
+        "android_client_info": {
+          "package_name": "com.microteams"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69759200454-5h3h988upbgt5immbf3246bitdobdj3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_F_qJH3NvMsHTr0AiYvFqA_YiOxK2LFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69759200454-5h3h988upbgt5immbf3246bitdobdj3t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
