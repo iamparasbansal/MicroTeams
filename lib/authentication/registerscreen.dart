@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:microteams/variables.dart';
 
@@ -9,6 +10,11 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController usernamecontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Color microTeamsLight = Color(0xff7B83EB);
@@ -56,6 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: TextField(
         style: mystyle(18, Colors.grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
+        controller: usernamecontroller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
             left: 10,
@@ -80,6 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: TextField(
         style: mystyle(18, Colors.grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
+        controller: emailcontroller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
             left: 10,
@@ -105,6 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         style: mystyle(18, Colors.grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
         obscureText: true,
+        controller: passwordcontroller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
             left: 10,
@@ -124,7 +133,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     var signUpButton = InkWell(
-      onTap: (){},
+      onTap: (){
+        try {
+          FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailcontroller.text, 
+            password: passwordcontroller.text
+          ).then((signeduser){
+            userCollection.doc(signeduser.user!.uid).set({
+              'username': usernamecontroller.text,
+              'email': emailcontroller.text,
+              'password': passwordcontroller.text,
+              'uid': signeduser.user!.uid,
+            });
+          });
+          Navigator.pop(context);
+        } catch (e) {
+          print(e);
+          var snackbar = SnackBar(
+            content: Text(
+              e.toString(),
+              style: mystyle(15),
+            )
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+        }
+      },
       child: Container(
         width: MediaQuery.of(context).size.width/1.4,
         height: 46,

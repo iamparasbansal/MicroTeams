@@ -3,6 +3,7 @@
 // It covers the UI of Login/Signup Screen
 //------------------------------------------------------------------------
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:microteams/authentication/registerscreen.dart';
 import 'package:microteams/variables.dart';
@@ -15,6 +16,10 @@ class NavigateAuthScreen extends StatefulWidget {
 }
 
 class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
+
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Color microTeamsLight = Color(0xff7B83EB);
@@ -84,6 +89,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       child: TextField(
         style: mystyle(18, Colors.grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
+        controller: emailcontroller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
             left: 10,
@@ -113,6 +119,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         style: mystyle(17, Colors.grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
         obscureText: true,
+        controller: passwordcontroller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
             left: 10,
@@ -135,7 +142,24 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     // Sign In Button
     //------------------------------------------------------------------------
     var signInButton = InkWell(
-      onTap: (){},
+      onTap: (){
+        try {
+          FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: emailcontroller.text, 
+            password: passwordcontroller.text
+          );
+          Navigator.pop(context);
+        } catch (e) {
+          print(e);
+          var snackbar = SnackBar(
+            content: Text(
+              e.toString(),
+              style: mystyle(15),
+            )
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+        }
+      },
       child: Container(
         width: MediaQuery.of(context).size.width/1.4,
         height: 46,
