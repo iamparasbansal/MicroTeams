@@ -1,8 +1,8 @@
 name: microteams
-description: A new Flutter project.
+description: A complete web conference application.
 
 # The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
+# pub.dev using `pub publish`. 
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -10,6 +10,8 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
+# Run `flutter pub get` to install the following dependencies
+# before running the application in development mode
 dependencies:
   flutter:
     sdk: flutter
