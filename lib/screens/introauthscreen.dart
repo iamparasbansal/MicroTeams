@@ -52,7 +52,6 @@ class _IntroAuthScreenState extends State<IntroAuthScreen> {
       onDone: (){
         Navigator.push(context, MaterialPageRoute(builder: (context)=>NavigateAuthScreen()));
       },
-      onSkip: (){},
       showSkipButton: true,
       skip: Text(
         "Skip", 
@@ -70,7 +69,7 @@ class _IntroAuthScreenState extends State<IntroAuthScreen> {
       dotsDecorator: DotsDecorator(
         size: const Size.square(10.0),
         activeSize: const Size(20.0, 10.0),
-        activeColor: Colors.black,
+        activeColor: Color(0xff6264A7),
         color: Colors.black26,
         spacing: const EdgeInsets.symmetric(horizontal: 5.0),
         activeShape: RoundedRectangleBorder(
