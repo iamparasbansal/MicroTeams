@@ -167,13 +167,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  flutter_gradient_colors:
-    dependency: "direct main"
-    description:
-      name: flutter_gradient_colors
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -337,7 +330,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.11.0"
+    version: "1.11.1"
   pin_code_fields:
     dependency: "direct main"
     description:

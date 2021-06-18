@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:microteams/authentication/navigateauthscreen.dart';
 import 'package:microteams/variables.dart';
 
 class IntroAuthScreen extends StatefulWidget {
   const IntroAuthScreen({ Key? key }) : super(key: key);
-
   @override
   _IntroAuthScreenState createState() => _IntroAuthScreenState();
 }
@@ -49,7 +49,7 @@ class _IntroAuthScreenState extends State<IntroAuthScreen> {
         )
       ],
       onDone: (){
-        print("Done");
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>NavigateAuthScreen()));
       },
       onSkip: (){},
       showSkipButton: true,
