@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'package:microteams/screens/homepage.dart';
-import 'package:microteams/screens/introauthscreen.dart';
+import 'package:microteams/screens/home-page.dart';
+import 'package:microteams/screens/intro-auth-screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,10 +2,12 @@
 // This is the Auth Screen
 // It covers the UI of Login/Signup Screen
 //------------------------------------------------------------------------
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:microteams/authentication/registerscreen.dart';
+import 'package:microteams/authentication/register-screen.dart';
+import 'package:microteams/enums/auth-result-status.dart';
+import 'package:microteams/screens/home-page.dart';
+import 'package:microteams/utils/auth-exception-handler.dart';
+import 'package:microteams/utils/firebase-auth-helper.dart';
 import 'package:microteams/variables.dart';
 
 class NavigateAuthScreen extends StatefulWidget {
@@ -19,6 +21,47 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
 
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+  bool isInProgress = false;
+
+  _showAlertDialog(errorMsg) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Login Failed',
+            style: TextStyle(color: Colors.black),
+          ),
+          content: Text(errorMsg),
+        );
+      }
+    );
+  }
+
+  _login() async {
+    {
+      setState(() {
+        isInProgress = true;
+      });
+      final status =
+        await FirebaseAuthHelper().login(
+          email: emailcontroller.text, 
+          password: passwordcontroller.text
+        );
+      setState(() {
+        isInProgress = false;
+      });
+      if (status == AuthResultStatus.successful) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } else {
+        final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
+        _showAlertDialog(errorMsg);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,22 +186,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     //------------------------------------------------------------------------
     var signInButton = InkWell(
       onTap: (){
-        try {
-          FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: emailcontroller.text, 
-            password: passwordcontroller.text
-          );
-          Navigator.pop(context);
-        } catch (e) {
-          print(e);
-          var snackbar = SnackBar(
-            content: Text(
-              e.toString(),
-              style: mystyle(15),
-            )
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-        }
+        _login();
       },
       child: Container(
         width: MediaQuery.of(context).size.width/1.4,
@@ -284,7 +312,11 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
 
     return Scaffold(
       backgroundColor: Colors.grey[250],
-      body: Stack(
+      body: isInProgress? Center(
+        child: CircularProgressIndicator(
+          color: Color(0xff6264A7),
+        ),
+      ) : Stack(
         children: [
           videoLogoImageContainer,
           Align(

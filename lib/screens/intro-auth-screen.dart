@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:microteams/authentication/navigateauthscreen.dart';
+import 'package:microteams/authentication/navigate-auth-screen.dart';
 import 'package:microteams/variables.dart';
 
 class IntroAuthScreen extends StatefulWidget {

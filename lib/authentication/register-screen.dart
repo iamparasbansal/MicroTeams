@@ -1,5 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:microteams/enums/auth-result-status.dart';
+import 'package:microteams/screens/home-page.dart';
+import 'package:microteams/utils/auth-exception-handler.dart';
+import 'package:microteams/utils/firebase-auth-helper.dart';
 import 'package:microteams/variables.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -13,7 +17,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
-  TextEditingController usernamecontroller = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+
+  bool isInProgress = false;
+
+  _showAlertDialog(errorMsg) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Login Failed',
+            style: TextStyle(color: Colors.black),
+          ),
+          content: Text(errorMsg),
+        );
+      }
+    );
+  }
+
+  _createAccount() async {
+    setState(() {
+      isInProgress = true;
+    });
+    final status =
+      await FirebaseAuthHelper().createAccount(
+        email: emailcontroller.text, 
+        password: passwordcontroller.text,
+        name: namecontroller.text
+      );
+    setState(() {
+      isInProgress = false;
+    }); 
+    if (status == AuthResultStatus.successful) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } else {
+      final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
+      _showAlertDialog(errorMsg);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +101,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
 
-    var usernameTextField = Container(
+    var nameTextField = Container(
       width: MediaQuery.of(context).size.width/1.4,
       height: 46,
       child: TextField(
         style: mystyle(18, Colors.grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
-        controller: usernamecontroller,
+        controller: namecontroller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
             left: 10,
@@ -75,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             borderSide: BorderSide(color: microTeamsSecondary, width: 2.0),
             borderRadius: BorderRadius.circular(10),
           ),
-          hintText: "Username",
+          hintText: "Name",
           hintStyle: mystyle(18, Colors.grey, FontWeight.w400)
         ),
       ),
@@ -134,29 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     var signUpButton = InkWell(
       onTap: (){
-        try {
-          FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: emailcontroller.text, 
-            password: passwordcontroller.text
-          ).then((signeduser){
-            userCollection.doc(signeduser.user!.uid).set({
-              'username': usernamecontroller.text,
-              'email': emailcontroller.text,
-              'password': passwordcontroller.text,
-              'uid': signeduser.user!.uid,
-            });
-          });
-          Navigator.pop(context);
-        } catch (e) {
-          print(e);
-          var snackbar = SnackBar(
-            content: Text(
-              e.toString(),
-              style: mystyle(15),
-            )
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-        }
+        _createAccount();
       },
       child: Container(
         width: MediaQuery.of(context).size.width/1.4,
@@ -180,7 +203,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     
     return Scaffold(
       backgroundColor: Colors.grey[250],
-      body: Stack(
+      body: isInProgress? Center(
+        child: CircularProgressIndicator(
+          color: Color(0xff6264A7),
+        ),
+      ) : Stack(
         children : [
           videoLogoImageContainer,
           Align(
@@ -198,7 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  usernameTextField,
+                  nameTextField,
                   SizedBox(
                     height: 10,
                   ),
