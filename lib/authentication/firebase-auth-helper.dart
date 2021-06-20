@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:microteams/enums/auth-result-status.dart';
-import 'package:microteams/utils/auth-exception-handler.dart';
-import 'package:microteams/variables.dart';
+import 'package:microteams/authentication/auth-exception-handler.dart';
+import 'package:microteams/utils/variables.dart';
 
 class FirebaseAuthHelper {
   final _auth = FirebaseAuth.instance;
   late AuthResultStatus _status;
-  ///
-  /// Helper Functions
-  ///
+  
+  //------------------------------------------------------------------------
+  // Helper Functions
+  //------------------------------------------------------------------------
 
   Future<AuthResultStatus> createAccount({email, password, name}) async {
     try {

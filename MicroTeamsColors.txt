@@ -1,4 +1,0 @@
-Color microTeamsLight = Color(0xff7B83EB);
-Color microTeamsDark1 = Color(0xff505AC9);
-Color microTeamsDark2 = Color(0xff464EB8);
-Color microTeamsSecondary = Color(0xff6264A7);

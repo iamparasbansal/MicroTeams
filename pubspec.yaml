@@ -15,11 +15,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # FireBase Plugins
   firebase_auth:
   cloud_firestore:
   firebase_core:
   provider:
-  modal_progress_hud:
+
   google_fonts:
   uuid:
   intl:

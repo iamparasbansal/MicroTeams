@@ -1,5 +1,4 @@
 
-
 import '../enums/auth-result-status.dart';
 
 class AuthExceptionHandler {
@@ -35,9 +34,9 @@ class AuthExceptionHandler {
     return status;
   }
 
-  ///
-  /// Accepts AuthExceptionHandler.errorType
-  ///
+  //------------------------------------------------------------------------
+  // Accepts AuthExceptionHandler.errorType
+  //------------------------------------------------------------------------
   static generateExceptionMessage(exceptionCode) {
     String errorMessage;
     switch (exceptionCode) {

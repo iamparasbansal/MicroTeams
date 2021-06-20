@@ -1,14 +1,15 @@
 //------------------------------------------------------------------------
-// This is the Auth Screen
-// It covers the UI of Login/Signup Screen
+// This is the main Authentication Screen
+// It handles the Signin Logic
 //------------------------------------------------------------------------
 import 'package:flutter/material.dart';
-import 'package:microteams/authentication/register-screen.dart';
+import 'package:microteams/screens/register-screen.dart';
 import 'package:microteams/enums/auth-result-status.dart';
 import 'package:microteams/screens/home-page.dart';
-import 'package:microteams/utils/auth-exception-handler.dart';
-import 'package:microteams/utils/firebase-auth-helper.dart';
-import 'package:microteams/variables.dart';
+import 'package:microteams/authentication/auth-exception-handler.dart';
+import 'package:microteams/authentication/firebase-auth-helper.dart';
+import 'package:microteams/theme/app-colors.dart';
+import 'package:microteams/utils/variables.dart';
 
 class NavigateAuthScreen extends StatefulWidget {
   const NavigateAuthScreen({ Key? key }) : super(key: key);
@@ -30,7 +31,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         return AlertDialog(
           title: Text(
             'Login Failed',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: black),
           ),
           content: Text(errorMsg),
         );
@@ -38,6 +39,9 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     );
   }
 
+  //------------------------------------------------------------------------
+  // This function hadles the click on Signin Button
+  //------------------------------------------------------------------------
   _login() async {
     {
       setState(() {
@@ -65,12 +69,10 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Color microTeamsLight = Color(0xff7B83EB);
-    Color microTeamsSecondary = Color(0xff6264A7);
-
+  
     //------------------------------------------------------------------------
     // This is the container that appears on top of Login Screen
-    // It includes brand name and the video logo
+    // It includes brand name and the video png
     // Covers half of the background screen
     //------------------------------------------------------------------------
     var videoLogoImageContainer = Container(
@@ -80,7 +82,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [microTeamsLight, microTeamsLight]
+          colors: [purpleLight, purpleLight]
         ),
       ),
       child: Column(
@@ -91,7 +93,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
             child: Container(
               child: Text(
                 'MicroTeams',
-                style: mystyle(30, Colors.black, FontWeight.w600),
+                style: mystyle(30, black, FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -100,9 +102,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
             'images/logo.png', 
             height: 100,
           ),
-          SizedBox(
-            height: 50,
-          ),
+          mySizedBox(50),
         ],
       ),
     );
@@ -116,7 +116,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       child: Container(
         child: Text(
           'Get started with your work, school, or personal email account',
-          style: mystyle(20, Colors.black, FontWeight.w400),
+          style: mystyle(20, black, FontWeight.w400),
           textAlign: TextAlign.center,
         ),
       ),
@@ -130,7 +130,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       width: MediaQuery.of(context).size.width/1.4,
       height: 46,
       child: TextField(
-        style: mystyle(18, Colors.grey, FontWeight.w500),
+        style: mystyle(18, grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
         controller: emailcontroller,
         decoration: InputDecoration(
@@ -142,11 +142,11 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: microTeamsSecondary, width: 2.0),
+            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
             borderRadius: BorderRadius.circular(10),
           ),
           hintText: "Enter your email",
-          hintStyle: mystyle(18, Colors.grey, FontWeight.w400)
+          hintStyle: mystyle(18, grey, FontWeight.w400)
         ),
       ),
     );
@@ -159,7 +159,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       width: MediaQuery.of(context).size.width/1.4,
       height: 46,
       child: TextField(
-        style: mystyle(17, Colors.grey, FontWeight.w500),
+        style: mystyle(17, grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
         obscureText: true,
         controller: passwordcontroller,
@@ -172,11 +172,11 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: microTeamsSecondary, width: 2.0),
+            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
             borderRadius: BorderRadius.circular(10),
           ),
           hintText: "Enter your password",
-          hintStyle: mystyle(17, Colors.grey, FontWeight.w400)
+          hintStyle: mystyle(17, grey, FontWeight.w400)
         ),
       ),
     );
@@ -195,14 +195,14 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [microTeamsSecondary, microTeamsSecondary]
+            colors: [purpleSecondary, purpleSecondary]
           ),
           borderRadius: BorderRadius.circular(10)
         ),
         child: Center(
           child: Text(
             "Sign in", 
-            style: mystyle(20, Colors.white, FontWeight.w400),
+            style: mystyle(20, white, FontWeight.w400),
           ),
         ),
       ),
@@ -219,14 +219,14 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: microTeamsSecondary,
+            color: purpleSecondary,
             width: 2,
           ),
         ),
         child: Center(
           child: Text(
             "Join a meeting", 
-            style: mystyle(20, microTeamsSecondary, FontWeight.w400),
+            style: mystyle(20, purpleSecondary, FontWeight.w400),
           ),
         ),
       ),
@@ -234,6 +234,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
 
     //------------------------------------------------------------------------
     // Sign Up Button
+    // It naviagates to registration-screen when clicked
     //------------------------------------------------------------------------
     var signUpButton = InkWell(
       onTap: ()=> Navigator.push(
@@ -248,14 +249,14 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: microTeamsSecondary,
+            color: purpleSecondary,
             width: 2,
           ),
         ),
         child: Center(
           child: Text(
             "Sign up for free", 
-            style: mystyle(20, microTeamsSecondary, FontWeight.w400),
+            style: mystyle(20, purpleSecondary, FontWeight.w400),
           ),
         ),
       ),
@@ -271,21 +272,13 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 40,
-          ),
+          mySizedBox(40),
           generalText,
-          SizedBox(
-            height: 20,
-          ),
+          mySizedBox(20),
           emailTextField,
-          SizedBox(
-            height: 10,
-          ),
+          mySizedBox(10),
           passwordTextField,
-          SizedBox(
-            height: 10,
-          ),
+          mySizedBox(10),
           signInButton,
         ],
       ),
@@ -299,22 +292,18 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           joinMeetingButton,
-          SizedBox(
-            height: 10,
-          ),
+          mySizedBox(10),
           signUpButton,
-          SizedBox(
-            height: 20,
-          ),
+          mySizedBox(20),
         ],
       ),
     );
 
     return Scaffold(
-      backgroundColor: Colors.grey[250],
+      backgroundColor: greyLight,
       body: isInProgress? Center(
         child: CircularProgressIndicator(
-          color: Color(0xff6264A7),
+          color: purpleSecondary,
         ),
       ) : Stack(
         children: [
@@ -328,13 +317,13 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
+                    color: grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 5,
                     offset: const Offset(0,3),
                   ),
                 ],
-                color: Colors.white,
+                color: white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20)

@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:microteams/enums/auth-result-status.dart';
 import 'package:microteams/screens/home-page.dart';
-import 'package:microteams/utils/auth-exception-handler.dart';
-import 'package:microteams/utils/firebase-auth-helper.dart';
-import 'package:microteams/variables.dart';
+import 'package:microteams/authentication/auth-exception-handler.dart';
+import 'package:microteams/authentication/firebase-auth-helper.dart';
+import 'package:microteams/theme/app-colors.dart';
+import 'package:microteams/utils/variables.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({ Key? key }) : super(key: key);
@@ -18,7 +18,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController namecontroller = TextEditingController();
-
   bool isInProgress = false;
 
   _showAlertDialog(errorMsg) {
@@ -28,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return AlertDialog(
           title: Text(
             'Login Failed',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: black),
           ),
           content: Text(errorMsg),
         );
@@ -36,6 +35,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  //------------------------------------------------------------------------
+  // This function hadles the click on Signup Button
+  //------------------------------------------------------------------------
   _createAccount() async {
     setState(() {
       isInProgress = true;
@@ -62,8 +64,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Color microTeamsLight = Color(0xff7B83EB);
-    Color microTeamsSecondary = Color(0xff6264A7);
 
     //------------------------------------------------------------------------
     // This is the container that appears on top of Signup Screen
@@ -77,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [microTeamsLight, microTeamsLight]
+          colors: [purpleLight, purpleLight]
         ),
       ),
       child: Column(
@@ -88,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Container(
               child: Text(
                 'MicroTeams',
-                style: mystyle(30, Colors.black, FontWeight.w600),
+                style: mystyle(30, black, FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -100,12 +100,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ],
       ),
     );
-
+    
+    //------------------------------------------------------------------------
+    // Name Text Field to get user input of name for new account
+    //------------------------------------------------------------------------
     var nameTextField = Container(
       width: MediaQuery.of(context).size.width/1.4,
       height: 46,
       child: TextField(
-        style: mystyle(18, Colors.grey, FontWeight.w500),
+        style: mystyle(18, grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
         controller: namecontroller,
         decoration: InputDecoration(
@@ -117,20 +120,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: microTeamsSecondary, width: 2.0),
+            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
             borderRadius: BorderRadius.circular(10),
           ),
           hintText: "Name",
-          hintStyle: mystyle(18, Colors.grey, FontWeight.w400)
+          hintStyle: mystyle(18, grey, FontWeight.w400)
         ),
       ),
     );
 
+    //------------------------------------------------------------------------
+    // Email Text Field to get user input of email for new account
+    //------------------------------------------------------------------------
     var emailTextField = Container(
       width: MediaQuery.of(context).size.width/1.4,
       height: 46,
       child: TextField(
-        style: mystyle(18, Colors.grey, FontWeight.w500),
+        style: mystyle(18, grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
         controller: emailcontroller,
         decoration: InputDecoration(
@@ -142,20 +148,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: microTeamsSecondary, width: 2.0),
+            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
             borderRadius: BorderRadius.circular(10),
           ),
           hintText: "Email address",
-          hintStyle: mystyle(18, Colors.grey, FontWeight.w400)
+          hintStyle: mystyle(18, grey, FontWeight.w400)
         ),
       ),
     );
 
+    //------------------------------------------------------------------------
+    // Password Text Field
+    // Users will enter there new account password here in order to signup
+    //------------------------------------------------------------------------
     var passwordTextField = Container(
       width: MediaQuery.of(context).size.width/1.4,
       height: 46,
       child: TextField(
-        style: mystyle(18, Colors.grey, FontWeight.w500),
+        style: mystyle(18, grey, FontWeight.w500),
         keyboardType: TextInputType.emailAddress,
         obscureText: true,
         controller: passwordcontroller,
@@ -168,15 +178,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: microTeamsSecondary, width: 2.0),
+            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
             borderRadius: BorderRadius.circular(10),
           ),
           hintText: "Password",
-          hintStyle: mystyle(18, Colors.grey, FontWeight.w400)
+          hintStyle: mystyle(18, grey, FontWeight.w400)
         ),
       ),
     );
 
+    //------------------------------------------------------------------------
+    // Sign Up Button
+    //------------------------------------------------------------------------
     var signUpButton = InkWell(
       onTap: (){
         _createAccount();
@@ -188,24 +201,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [microTeamsSecondary, microTeamsSecondary]
+            colors: [purpleSecondary, purpleSecondary]
           ),
           borderRadius: BorderRadius.circular(10)
         ),
         child: Center(
           child: Text(
             "Sign up", 
-            style: mystyle(20, Colors.white, FontWeight.w400),
+            style: mystyle(20, white, FontWeight.w400),
           ),
         ),
       ),
     );
+
+    //------------------------------------------------------------------------
+    // Column to wrap text fields and signup button
+    //------------------------------------------------------------------------
+    var signUpColumn = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        nameTextField,
+        mySizedBox(10),
+        emailTextField,
+        mySizedBox(10),
+        passwordTextField,
+        mySizedBox(20),
+        signUpButton,
+      ],
+    );
     
     return Scaffold(
-      backgroundColor: Colors.grey[250],
+      backgroundColor: greyLight,
       body: isInProgress? Center(
         child: CircularProgressIndicator(
-          color: Color(0xff6264A7),
+          color: purpleSecondary
         ),
       ) : Stack(
         children : [
@@ -216,30 +245,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 1.7,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20)
                 ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  nameTextField,
-                  SizedBox(
-                    height: 10,
-                  ),
-                  emailTextField,
-                  SizedBox(
-                    height: 10,
-                  ),
-                  passwordTextField,
-                  SizedBox(
-                    height: 20,
-                  ),
-                  signUpButton,
-                ],
-              ),
+              child: signUpColumn,
             ),
           ),
         ],
