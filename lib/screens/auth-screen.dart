@@ -128,15 +128,15 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     //------------------------------------------------------------------------
     var emailTextField = Container(
       width: MediaQuery.of(context).size.width/1.4,
-      height: 46,
+      height: 42,
       child: TextField(
-        style: mystyle(18, grey, FontWeight.w500),
+        style: mystyle(18, black, FontWeight.w400),
         keyboardType: TextInputType.emailAddress,
         controller: emailcontroller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
             left: 10,
-            bottom: 23,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
+            bottom: 21,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -157,16 +157,16 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     //------------------------------------------------------------------------
     var passwordTextField = Container(
       width: MediaQuery.of(context).size.width/1.4,
-      height: 46,
+      height: 42,
       child: TextField(
-        style: mystyle(17, grey, FontWeight.w500),
+        style: mystyle(18, black, FontWeight.w400),
         keyboardType: TextInputType.emailAddress,
         obscureText: true,
         controller: passwordcontroller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
             left: 10,
-            bottom: 23,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
+            bottom: 21,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -176,7 +176,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
             borderRadius: BorderRadius.circular(10),
           ),
           hintText: "Enter your password",
-          hintStyle: mystyle(17, grey, FontWeight.w400)
+          hintStyle: mystyle(18, grey, FontWeight.w400)
         ),
       ),
     );
@@ -190,7 +190,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width/1.4,
-        height: 46,
+        height: 42,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -202,7 +202,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         child: Center(
           child: Text(
             "Sign in", 
-            style: mystyle(20, white, FontWeight.w400),
+            style: mystyle(18, white, FontWeight.w400),
           ),
         ),
       ),
@@ -215,7 +215,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       onTap: (){},
       child: Container(
         width: MediaQuery.of(context).size.width/1.4,
-        height: 46,
+        height: 42,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
@@ -226,7 +226,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         child: Center(
           child: Text(
             "Join a meeting", 
-            style: mystyle(20, purpleSecondary, FontWeight.w400),
+            style: mystyle(18, purpleSecondary, FontWeight.w400),
           ),
         ),
       ),
@@ -245,7 +245,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       ),
       child: Container(
         width: MediaQuery.of(context).size.width/1.4,
-        height: 46,
+        height: 42,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
@@ -256,7 +256,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         child: Center(
           child: Text(
             "Sign up for free", 
-            style: mystyle(20, purpleSecondary, FontWeight.w400),
+            style: mystyle(18, purpleSecondary, FontWeight.w400),
           ),
         ),
       ),

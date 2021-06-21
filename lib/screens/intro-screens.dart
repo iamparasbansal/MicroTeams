@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:microteams/screens/navigate-auth-screen.dart';
+import 'package:microteams/screens/auth-screen.dart';
 import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
