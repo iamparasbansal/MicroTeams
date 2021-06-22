@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
-import 'package:microteams/video-conference/create-meeting.dart';
-import 'package:microteams/video-conference/join-meeting.dart';
+import 'package:microteams/screens/video-conference/create-meeting.dart';
+import 'package:microteams/screens/video-conference/join-meeting.dart';
 
 class VideoConferenceScreen extends StatefulWidget {
   const VideoConferenceScreen({ Key? key }) : super(key: key);
