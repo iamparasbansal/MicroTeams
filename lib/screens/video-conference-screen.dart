@@ -52,6 +52,10 @@ class _VideoConferenceScreenState extends State<VideoConferenceScreen>
       ),
       bottom: TabBar(
         controller: tabController,
+        labelPadding:EdgeInsets.only(
+          bottom: 5,
+        ),
+        indicatorColor: purpleSecondary,
         tabs: [
           buildtab("Join Meeting"),
           buildtab("Create Meeting")
