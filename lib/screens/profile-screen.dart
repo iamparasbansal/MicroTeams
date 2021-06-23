@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:microteams/screens/auth-screen.dart';
+import 'package:microteams/screens/edit-profile-screen.dart';
 import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
@@ -21,7 +22,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   String name = "";
   bool dataIsThere = false;
-  TextEditingController nameController  = TextEditingController();
 
   @override
   void initState() {
@@ -39,71 +39,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
        dataIsThere = true;
      });
   }
-
-  //------------------------------------------------------------------------
-  // Function to update User Data in Firestore Database
-  //------------------------------------------------------------------------
-  editProfile() async {
-    userCollection.doc(FirebaseAuth.instance.currentUser!.uid).update({
-      'name': nameController.text
-    });
-    setState(() {
-      name = nameController.text;
-    });
-    Navigator.pop(context);
-  }
-
-  //------------------------------------------------------------------------
-  // Function to Handle Click on Edit Profile Button
-  //------------------------------------------------------------------------
-  openEditProfileDialog() async {
-    return showDialog(
-      context: context, 
-      builder: (context) {
-        return Dialog(
-          child: Container(
-            height: 200,
-            child: Column(
-              children: [
-                mySizedBox(30),
-                Container(
-                  margin: EdgeInsets.only(
-                    left: 30,
-                    right: 30
-                  ),
-                  child: TextField(
-                    controller: nameController,
-                    style: mystyle(18, black),
-                    decoration: InputDecoration(
-                      labelText: "Update name",
-                      labelStyle: mystyle(16, grey)
-                    ),
-                  ),
-                ),
-                mySizedBox(40),
-                InkWell(
-                  onTap: () => editProfile(),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width/2,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: black,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Update Now!",
-                        style: mystyle(17, white),
-                      ),
-                    ),
-                  ),
-                )
-              ]
-            ),
-          ),
-        );
-      }
-    );
-  }
   
   @override
   Widget build(BuildContext context) {
@@ -117,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         width: double.infinity,
         height: MediaQuery.of(context).size.height/2.5,
         decoration: BoxDecoration(
-          color: purplePrimary
+          color: purpleSecondary
         ),
       ),
     );
@@ -147,12 +82,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Button to provide Edit Profile Functionality
     //------------------------------------------------------------------------
     var editProfileButton = InkWell(
-      onTap: () => openEditProfileDialog(),
+      onTap: () => Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context)=> EditProfileScreen()
+        )
+      ),
       child: Container(
         width: MediaQuery.of(context).size.width/2,
         height: 40,
         decoration: BoxDecoration(
-          color: black,
+          color: purpleSecondary,
+          borderRadius: BorderRadius.circular(10)
         ),
         child: Center(
           child: Text(
@@ -178,7 +119,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         width: MediaQuery.of(context).size.width/2,
         height: 40,
         decoration: BoxDecoration(
-          color: black,
+          color: purpleSecondary,
+          borderRadius: BorderRadius.circular(10)
         ),
         child: Center(
           child: Text(

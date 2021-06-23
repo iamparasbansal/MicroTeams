@@ -39,26 +39,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // This function hadles the click on Signup Button
   //------------------------------------------------------------------------
   _createAccount() async {
-    setState(() {
-      isInProgress = true;
-    });
-    final status =
-      await FirebaseAuthHelper().createAccount(
-        email: emailcontroller.text, 
-        password: passwordcontroller.text,
-        name: namecontroller.text
-      );
-    setState(() {
-      isInProgress = false;
-    }); 
-    if (status == AuthResultStatus.successful) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } else {
-      final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
-      _showAlertDialog(errorMsg);
+    if(namecontroller.text==''){
+      _showAlertDialog("Name field is empty, please fill it.");
+    }else{
+      setState(() {
+        isInProgress = true;
+      });
+      final status =
+        await FirebaseAuthHelper().createAccount(
+          email: emailcontroller.text, 
+          password: passwordcontroller.text,
+          name: namecontroller.text
+        );
+      setState(() {
+        isInProgress = false;
+      }); 
+      if (status == AuthResultStatus.successful) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } else {
+        final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
+        _showAlertDialog(errorMsg);
+      }
     }
   }
 
@@ -246,10 +250,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: MediaQuery.of(context).size.height / 1.7,
               decoration: BoxDecoration(
                 color: white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20)
-                ),
               ),
               child: signUpColumn,
             ),

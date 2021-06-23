@@ -3,6 +3,7 @@
 // It handles the Signin Logic
 //------------------------------------------------------------------------
 import 'package:flutter/material.dart';
+import 'package:microteams/screens/join-without-login-screen.dart';
 import 'package:microteams/screens/register-screen.dart';
 import 'package:microteams/enums/auth-result-status.dart';
 import 'package:microteams/screens/home-page.dart';
@@ -212,7 +213,12 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     // Button for Joining Meeting directly as a Guest
     //------------------------------------------------------------------------
     var joinMeetingButton = InkWell(
-      onTap: (){},
+      onTap: ()=> Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context)=> JoinWithoutLogin()
+        )
+      ),
       child: Container(
         width: MediaQuery.of(context).size.width/1.4,
         height: 42,

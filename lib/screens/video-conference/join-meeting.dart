@@ -89,6 +89,7 @@ class _JoinMeetingState extends State<JoinMeeting> {
 
 
     return Scaffold(
+      backgroundColor: greyLight,
       body: Center(
         child: Container(
           padding: EdgeInsets.symmetric(

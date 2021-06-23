@@ -200,29 +200,40 @@ class _CreateMeetingState extends State<CreateMeeting> {
     );
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          createMeetingText,
-          mySizedBox(20),
-          meetingTitleTextField,
-          mySizedBox(10),
-          createMeetingButton,
-          mySizedBox(40),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "OR",
-                style: mystyle(20, black)
-              )
-            ],
+      backgroundColor: greyLight,
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 25
           ),
-          mySizedBox(40),
-          getMeetingLinkText,
-          mySizedBox(10),
-          getMeetingLinkButton,
-        ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                mySizedBox(20),
+                createMeetingText,
+                mySizedBox(20),
+                meetingTitleTextField,
+                mySizedBox(10),
+                createMeetingButton,
+                mySizedBox(30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "OR",
+                      style: mystyle(20, black)
+                    )
+                  ],
+                ),
+                mySizedBox(30),
+                getMeetingLinkText,
+                mySizedBox(10),
+                getMeetingLinkButton,
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
