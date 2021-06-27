@@ -19,6 +19,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
 
   String code = '';
   String name = '';
+  String email = '';
   TextEditingController meetingTitleController = TextEditingController();
   bool? isVideoMuted = true;
   bool? isAudioMuted = true;
@@ -36,6 +37,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
     DocumentSnapshot userDoc = await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
      setState((){
        name = (userDoc.data() as dynamic)['name'];
+       email = (userDoc.data() as dynamic)['email'];
      });
   }
 
@@ -60,7 +62,9 @@ class _CreateMeetingState extends State<CreateMeeting> {
 
       var options = JitsiMeetingOptions(room: code)
       ..subject = meetingTitleController.text
-      ..userDisplayName = name 
+      ..serverURL = "https://microteams.tech"
+      ..userDisplayName = name
+      ..userEmail = email
       ..audioMuted = isAudioMuted
       ..videoMuted = isVideoMuted
       ..featureFlags.addAll(featureFlags);

@@ -21,6 +21,7 @@ class _JoinMeetingState extends State<JoinMeeting> {
   bool? isVideoMuted = true;
   bool? isAudioMuted = true;
   String name = '';
+  String email = '';
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _JoinMeetingState extends State<JoinMeeting> {
     DocumentSnapshot userDoc = await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
      setState((){
        name = (userDoc.data() as dynamic)['name'];
+       email = (userDoc.data() as dynamic)['email'];
      });
   }
 
@@ -53,7 +55,9 @@ class _JoinMeetingState extends State<JoinMeeting> {
       }
 
       var options = JitsiMeetingOptions(room: roomController.text)
-      ..userDisplayName = name 
+      ..serverURL = "https://microteams.tech"
+      ..userDisplayName = name
+      ..userEmail = email
       ..audioMuted = isAudioMuted
       ..videoMuted = isVideoMuted
       ..featureFlags.addAll(featureFlags);
