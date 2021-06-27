@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:microteams/screens/home-page.dart';
-import 'package:microteams/screens/profile-screen.dart';
 import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
@@ -15,30 +15,91 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
 
-  String name = "";
-  TextEditingController nameController  = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
 
+  bool dataIsThere = false;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  //------------------------------------------------------------------------
+  // Function to get User Data from Firestore Database
+  //------------------------------------------------------------------------
+  getUserData() async {
+    DocumentSnapshot userDoc = await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+     setState((){
+       nameController.text = (userDoc.data() as dynamic)['name'];
+       emailController.text = (userDoc.data() as dynamic)['email'];
+       dataIsThere = true;
+     });
+  }
+
+  _showAlertDialog(errorMsg) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Update Failed',
+            style: TextStyle(color: black),
+          ),
+          content: Text(errorMsg),
+        );
+      }
+    );
+  }
 
   //------------------------------------------------------------------------
   // Function to update User Data in Firestore Database
   //------------------------------------------------------------------------
   editProfile() async {
-    userCollection.doc(FirebaseAuth.instance.currentUser!.uid).update({
-      'name': nameController.text
-    });
-    setState(() {
-      name = nameController.text;
-    });
-    Navigator.push(
-      context, 
-      MaterialPageRoute(
-        builder: (context)=> HomePage()
-      )
-    );
+    if(nameController.text == '' || emailController.text == ''){
+      _showAlertDialog("All fields are required. Please fill them all.");
+    }else{
+      userCollection.doc(FirebaseAuth.instance.currentUser!.uid).update({
+        'name': nameController.text,
+        'email': emailController.text
+      });
+      Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context)=> HomePage()
+        )
+      );
+    }
   }
   
   @override
   Widget build(BuildContext context) {
+
+    var editProfileText = Container(
+      padding: EdgeInsets.only(
+        left: 30,
+        right: 30,
+        bottom: 10
+      ),
+      child: Text(
+        "Edit the field you want to update and click update now.",
+        style: mystyle(20, black, FontWeight.w400),
+        textAlign: TextAlign.center,
+      )
+    );
+
+    var orText = Container(
+      padding: EdgeInsets.only(
+        left: 30,
+        right: 30,
+        bottom: 10
+      ),
+      child: Text(
+        "OR",
+        style: mystyle(20, black, FontWeight.w600),
+        textAlign: TextAlign.center,
+      )
+    );
 
     var updateNowButton = InkWell(
       onTap: (){
@@ -61,7 +122,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
 
     //------------------------------------------------------------------------
-    // Name Text Field to get user input of new name of user
+    var changePasswordButton = InkWell(
+      onTap: (){},
+      child: Container(
+        width: MediaQuery.of(context).size.width/1.4,
+        height: 40,
+        decoration: BoxDecoration(
+          color: purpleSecondary,
+          borderRadius: BorderRadius.circular(10)
+        ),
+        child: Center(
+          child: Text(
+            "Change Password",
+            style: mystyle(17, white),
+          ),
+        ),
+      ),
+    );
+
+    // Name Text Field to get user input of new Name of user
     //------------------------------------------------------------------------
     var nameTextField = Container(
       width: MediaQuery.of(context).size.width/1.4,
@@ -88,13 +167,38 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
 
+    var emailTextField = Container(
+      width: MediaQuery.of(context).size.width/1.4,
+      height: 42,
+      child: TextField(
+        style: mystyle(18, black, FontWeight.w400),
+        keyboardType: TextInputType.emailAddress,
+        controller: emailController,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(
+            left: 10,
+            bottom: 21,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder:  OutlineInputBorder(
+            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          hintText: "Email",
+          hintStyle: mystyle(18, grey, FontWeight.w400)
+        ),
+      ),
+    );
+
     //------------------------------------------------------------------------
     // User Profile Pic Container
     //------------------------------------------------------------------------
     var circleAvatar = Container(
       margin: EdgeInsets.only(
         left: (MediaQuery.of(context).size.width / 2)-50,
-        top: MediaQuery.of(context).size.height / 3.1,
+        top: MediaQuery.of(context).size.height / 5.5,
       ),
       child:Container(
         width: 100,
@@ -116,7 +220,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       clipper: OvalBottomBorderClipper(),
       child: Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height/2.5,
+        height: MediaQuery.of(context).size.height/4,
         decoration: BoxDecoration(
           color: purpleSecondary
         ),
@@ -124,19 +228,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
     
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: greyLight,
-      body: Stack(
+      body: dataIsThere == false ? Center(
+        child: CircularProgressIndicator(
+          color: purpleSecondary,
+        ),
+      ) : Column(
         children: [
-          clipPath,
-          circleAvatar,
-           Center(
+          Stack(
+            children:[
+              clipPath,
+              circleAvatar,
+            ],
+          ),
+          Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                mySizedBox(300),
+                mySizedBox(40),
+                editProfileText,
+                mySizedBox(20),
                 nameTextField,
                 mySizedBox(20),
+                emailTextField,
+                mySizedBox(20),
                 updateNowButton,
+                mySizedBox(20),
+                orText,
+                mySizedBox(20),
+                changePasswordButton,
               ],
             ),
           ),
