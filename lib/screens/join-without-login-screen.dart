@@ -4,7 +4,7 @@ import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
 class JoinWithoutLogin extends StatefulWidget {
-  const JoinWithoutLogin({ Key? key }) : super(key: key);
+  const JoinWithoutLogin({Key? key}) : super(key: key);
 
   @override
   _JoinWithoutLoginState createState() => _JoinWithoutLoginState();
@@ -13,23 +13,20 @@ class JoinWithoutLogin extends StatefulWidget {
 class _JoinWithoutLoginState extends State<JoinWithoutLogin> {
   @override
   Widget build(BuildContext context) {
-
-
     var videoLogoImageContainer = Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height/2.5,
+      height: MediaQuery.of(context).size.height / 2.5,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [purpleLight, purpleLight]
-        ),
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [blueSecondary, blueSecondary]),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width/1.4,
+            width: MediaQuery.of(context).size.width / 1.4,
             child: Container(
               child: Text(
                 'MicroTeams',
@@ -39,7 +36,7 @@ class _JoinWithoutLoginState extends State<JoinWithoutLogin> {
             ),
           ),
           Image.asset(
-            'images/logo.png', 
+            'images/logo.png',
             height: 100,
           ),
           mySizedBox(50),
@@ -50,7 +47,7 @@ class _JoinWithoutLoginState extends State<JoinWithoutLogin> {
     return Scaffold(
       backgroundColor: greyLight,
       body: Stack(
-        children : [
+        children: [
           videoLogoImageContainer,
           Align(
             alignment: Alignment.bottomCenter,

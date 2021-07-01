@@ -5,27 +5,23 @@ import 'package:microteams/screens/video-conference/create-meeting.dart';
 import 'package:microteams/screens/video-conference/join-meeting.dart';
 
 class VideoConferenceScreen extends StatefulWidget {
-  const VideoConferenceScreen({ Key? key }) : super(key: key);
+  const VideoConferenceScreen({Key? key}) : super(key: key);
 
   @override
   _VideoConferenceScreenState createState() => _VideoConferenceScreenState();
 }
 
-class _VideoConferenceScreenState extends State<VideoConferenceScreen> 
-  with SingleTickerProviderStateMixin {
-
+class _VideoConferenceScreenState extends State<VideoConferenceScreen>
+    with SingleTickerProviderStateMixin {
   late TabController tabController;
 
-  buildtab(String name){
+  buildtab(String name) {
     return Container(
       width: 150,
       height: 50,
       child: Card(
         child: Center(
-          child: Text(
-            name,
-            style: mystyle(15, black, FontWeight.w600)
-          ),
+          child: Text(name, style: mystyle(15, black, FontWeight.w600)),
         ),
       ),
     );
@@ -34,32 +30,25 @@ class _VideoConferenceScreenState extends State<VideoConferenceScreen>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(
-      length: 2,
-      vsync: this
-    );
+    tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
-
     var appBar = AppBar(
       centerTitle: true,
-      backgroundColor: purpleSecondary,
+      backgroundColor: blueSecondary,
       title: Text(
         "MicroTeams",
         style: mystyle(20, white, FontWeight.w600),
       ),
       bottom: TabBar(
         controller: tabController,
-        labelPadding:EdgeInsets.only(
+        labelPadding: EdgeInsets.only(
           bottom: 5,
         ),
-        indicatorColor: purpleSecondary,
-        tabs: [
-          buildtab("Join Meeting"),
-          buildtab("Create Meeting")
-        ],
+        indicatorColor: blueSecondary,
+        tabs: [buildtab("Join Meeting"), buildtab("Create Meeting")],
       ),
     );
 

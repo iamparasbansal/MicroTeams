@@ -7,14 +7,13 @@ import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({ Key? key }) : super(key: key);
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -29,89 +28,71 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // Function to get User Data from Firestore Database
   //------------------------------------------------------------------------
   getUserData() async {
-    DocumentSnapshot userDoc = await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-     setState((){
-       nameController.text = (userDoc.data() as dynamic)['name'];
-       emailController.text = (userDoc.data() as dynamic)['email'];
-       dataIsThere = true;
-     });
+    DocumentSnapshot userDoc =
+        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+    setState(() {
+      nameController.text = (userDoc.data() as dynamic)['name'];
+      emailController.text = (userDoc.data() as dynamic)['email'];
+      dataIsThere = true;
+    });
   }
 
   _showAlertDialog(errorMsg) {
     return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'Update Failed',
-            style: TextStyle(color: black),
-          ),
-          content: Text(errorMsg),
-        );
-      }
-    );
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Update Failed',
+              style: TextStyle(color: black),
+            ),
+            content: Text(errorMsg),
+          );
+        });
   }
 
   //------------------------------------------------------------------------
   // Function to update User Data in Firestore Database
   //------------------------------------------------------------------------
   editProfile() async {
-    if(nameController.text == '' || emailController.text == ''){
+    if (nameController.text == '' || emailController.text == '') {
       _showAlertDialog("All fields are required. Please fill them all.");
-    }else{
-      userCollection.doc(FirebaseAuth.instance.currentUser!.uid).update({
-        'name': nameController.text,
-        'email': emailController.text
-      });
+    } else {
+      userCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({'name': nameController.text, 'email': emailController.text});
       Navigator.push(
-        context, 
-        MaterialPageRoute(
-          builder: (context)=> HomePage()
-        )
-      );
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     var editProfileText = Container(
-      padding: EdgeInsets.only(
-        left: 30,
-        right: 30,
-        bottom: 10
-      ),
-      child: Text(
-        "Edit the field you want to update and click update now.",
-        style: mystyle(20, black, FontWeight.w400),
-        textAlign: TextAlign.center,
-      )
-    );
+        padding: EdgeInsets.only(left: 30, right: 30, bottom: 10),
+        child: Text(
+          "Edit the field you want to update and click update now.",
+          style: mystyle(20, black, FontWeight.w400),
+          textAlign: TextAlign.center,
+        ));
 
     var orText = Container(
-      padding: EdgeInsets.only(
-        left: 30,
-        right: 30,
-        bottom: 10
-      ),
-      child: Text(
-        "OR",
-        style: mystyle(20, black, FontWeight.w600),
-        textAlign: TextAlign.center,
-      )
-    );
+        padding: EdgeInsets.only(left: 30, right: 30, bottom: 10),
+        child: Text(
+          "OR",
+          style: mystyle(20, black, FontWeight.w600),
+          textAlign: TextAlign.center,
+        ));
 
     var updateNowButton = InkWell(
-      onTap: (){
+      onTap: () {
         editProfile();
       },
       child: Container(
-        width: MediaQuery.of(context).size.width/1.4,
+        width: MediaQuery.of(context).size.width / 1.4,
         height: 40,
         decoration: BoxDecoration(
-          color: purpleSecondary,
-          borderRadius: BorderRadius.circular(10)
-        ),
+            color: blueSecondary, borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Text(
             "Update Now",
@@ -123,14 +104,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     //------------------------------------------------------------------------
     var changePasswordButton = InkWell(
-      onTap: (){},
+      onTap: () {},
       child: Container(
-        width: MediaQuery.of(context).size.width/1.4,
+        width: MediaQuery.of(context).size.width / 1.4,
         height: 40,
         decoration: BoxDecoration(
-          color: purpleSecondary,
-          borderRadius: BorderRadius.circular(10)
-        ),
+            color: blueSecondary, borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Text(
             "Change Password",
@@ -143,52 +122,50 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     // Name Text Field to get user input of new Name of user
     //------------------------------------------------------------------------
     var nameTextField = Container(
-      width: MediaQuery.of(context).size.width/1.4,
+      width: MediaQuery.of(context).size.width / 1.4,
       height: 42,
       child: TextField(
         style: mystyle(18, black, FontWeight.w400),
         keyboardType: TextInputType.emailAddress,
         controller: nameController,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(
-            left: 10,
-            bottom: 21,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          hintText: "Name",
-          hintStyle: mystyle(18, grey, FontWeight.w400)
-        ),
+            contentPadding: EdgeInsets.only(
+              left: 10,
+              bottom: 21, // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: blueSecondary, width: 2.0),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            hintText: "Name",
+            hintStyle: mystyle(18, grey, FontWeight.w400)),
       ),
     );
 
     var emailTextField = Container(
-      width: MediaQuery.of(context).size.width/1.4,
+      width: MediaQuery.of(context).size.width / 1.4,
       height: 42,
       child: TextField(
         style: mystyle(18, black, FontWeight.w400),
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(
-            left: 10,
-            bottom: 21,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          hintText: "Email",
-          hintStyle: mystyle(18, grey, FontWeight.w400)
-        ),
+            contentPadding: EdgeInsets.only(
+              left: 10,
+              bottom: 21, // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: blueSecondary, width: 2.0),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            hintText: "Email",
+            hintStyle: mystyle(18, grey, FontWeight.w400)),
       ),
     );
 
@@ -196,72 +173,71 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     // User Profile Pic Container
     //------------------------------------------------------------------------
     var circleAvatar = Container(
-      margin: EdgeInsets.only(
-        left: (MediaQuery.of(context).size.width / 2)-50,
-        top: MediaQuery.of(context).size.height / 5.5,
-      ),
-      child:Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          color: greyLight,
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image:  AssetImage('images/profile.png'),
-          ),
+        margin: EdgeInsets.only(
+          left: (MediaQuery.of(context).size.width / 2) - 50,
+          top: MediaQuery.of(context).size.height / 5.5,
         ),
-      )
-    );
+        child: Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            color: greyLight,
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: AssetImage('images/profile.png'),
+            ),
+          ),
+        ));
 
     //------------------------------------------------------------------------
-    // Circular Purple Clip at Top of Edit Profile Page
+    // Circular blue Clip at Top of Edit Profile Page
     //------------------------------------------------------------------------
     var clipPath = ClipPath(
       clipper: OvalBottomBorderClipper(),
       child: Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height/4,
-        decoration: BoxDecoration(
-          color: purpleSecondary
-        ),
+        height: MediaQuery.of(context).size.height / 4,
+        decoration: BoxDecoration(color: blueSecondary),
       ),
     );
-    
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: greyLight,
-      body: dataIsThere == false ? Center(
-        child: CircularProgressIndicator(
-          color: purpleSecondary,
-        ),
-      ) : Column(
-        children: [
-          Stack(
-            children:[
-              clipPath,
-              circleAvatar,
-            ],
-          ),
-          Container(
-            child: Column(
+      body: dataIsThere == false
+          ? Center(
+              child: CircularProgressIndicator(
+                color: blueSecondary,
+              ),
+            )
+          : Column(
               children: [
-                mySizedBox(40),
-                editProfileText,
-                mySizedBox(20),
-                nameTextField,
-                mySizedBox(20),
-                emailTextField,
-                mySizedBox(20),
-                updateNowButton,
-                mySizedBox(20),
-                orText,
-                mySizedBox(20),
-                changePasswordButton,
+                Stack(
+                  children: [
+                    clipPath,
+                    circleAvatar,
+                  ],
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      mySizedBox(40),
+                      editProfileText,
+                      mySizedBox(20),
+                      nameTextField,
+                      mySizedBox(20),
+                      emailTextField,
+                      mySizedBox(20),
+                      updateNowButton,
+                      mySizedBox(20),
+                      orText,
+                      mySizedBox(20),
+                      changePasswordButton,
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

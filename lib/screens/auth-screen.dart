@@ -13,31 +13,29 @@ import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
 class NavigateAuthScreen extends StatefulWidget {
-  const NavigateAuthScreen({ Key? key }) : super(key: key);
+  const NavigateAuthScreen({Key? key}) : super(key: key);
 
   @override
   _NavigateAuthScreenState createState() => _NavigateAuthScreenState();
 }
 
 class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
-
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   bool isInProgress = false;
 
   _showAlertDialog(errorMsg) {
     return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'Login Failed',
-            style: TextStyle(color: black),
-          ),
-          content: Text(errorMsg),
-        );
-      }
-    );
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Login Failed',
+              style: TextStyle(color: black),
+            ),
+            content: Text(errorMsg),
+          );
+        });
   }
 
   //------------------------------------------------------------------------
@@ -48,11 +46,8 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       setState(() {
         isInProgress = true;
       });
-      final status =
-        await FirebaseAuthHelper().login(
-          email: emailcontroller.text, 
-          password: passwordcontroller.text
-        );
+      final status = await FirebaseAuthHelper().login(
+          email: emailcontroller.text, password: passwordcontroller.text);
       setState(() {
         isInProgress = false;
       });
@@ -70,7 +65,6 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-  
     //------------------------------------------------------------------------
     // This is the container that appears on top of Login Screen
     // It includes brand name and the video png
@@ -78,19 +72,18 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     //------------------------------------------------------------------------
     var videoLogoImageContainer = Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height/2,
+      height: MediaQuery.of(context).size.height / 2,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [purpleLight, purpleLight]
-        ),
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [blueSecondary, blueSecondary]),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width/1.4,
+            width: MediaQuery.of(context).size.width / 1.4,
             child: Container(
               child: Text(
                 'MicroTeams',
@@ -100,20 +93,20 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
             ),
           ),
           Image.asset(
-            'images/logo.png', 
+            'images/logo.png',
             height: 100,
           ),
           mySizedBox(50),
         ],
       ),
     );
-    
+
     //------------------------------------------------------------------------
     // General Text, i.e.,
     // Get Started with your work, school, or personal email
     //------------------------------------------------------------------------
     var generalText = SizedBox(
-      width: MediaQuery.of(context).size.width/1.5,
+      width: MediaQuery.of(context).size.width / 1.5,
       child: Container(
         child: Text(
           'Get started with your work, school, or personal email account',
@@ -128,27 +121,26 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     // User will enter email here in order to login
     //------------------------------------------------------------------------
     var emailTextField = Container(
-      width: MediaQuery.of(context).size.width/1.4,
+      width: MediaQuery.of(context).size.width / 1.4,
       height: 42,
       child: TextField(
         style: mystyle(18, black, FontWeight.w400),
         keyboardType: TextInputType.emailAddress,
         controller: emailcontroller,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(
-            left: 10,
-            bottom: 21,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          hintText: "Enter your email",
-          hintStyle: mystyle(18, grey, FontWeight.w400)
-        ),
+            contentPadding: EdgeInsets.only(
+              left: 10,
+              bottom: 21, // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: blueSecondary, width: 2.0),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            hintText: "Enter your email",
+            hintStyle: mystyle(18, grey, FontWeight.w400)),
       ),
     );
 
@@ -157,7 +149,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     // Users will enter there account password here in order to login
     //------------------------------------------------------------------------
     var passwordTextField = Container(
-      width: MediaQuery.of(context).size.width/1.4,
+      width: MediaQuery.of(context).size.width / 1.4,
       height: 42,
       child: TextField(
         style: mystyle(18, black, FontWeight.w400),
@@ -165,20 +157,19 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
         obscureText: true,
         controller: passwordcontroller,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(
-            left: 10,
-            bottom: 21,  // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder:  OutlineInputBorder(
-            borderSide: BorderSide(color: purpleSecondary, width: 2.0),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          hintText: "Enter your password",
-          hintStyle: mystyle(18, grey, FontWeight.w400)
-        ),
+            contentPadding: EdgeInsets.only(
+              left: 10,
+              bottom: 21, // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: blueSecondary, width: 2.0),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            hintText: "Enter your password",
+            hintStyle: mystyle(18, grey, FontWeight.w400)),
       ),
     );
 
@@ -186,23 +177,21 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     // Sign In Button
     //------------------------------------------------------------------------
     var signInButton = InkWell(
-      onTap: (){
+      onTap: () {
         _login();
       },
       child: Container(
-        width: MediaQuery.of(context).size.width/1.4,
+        width: MediaQuery.of(context).size.width / 1.4,
         height: 42,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [purpleSecondary, purpleSecondary]
-          ),
-          borderRadius: BorderRadius.circular(10)
-        ),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [blueSecondary, blueSecondary]),
+            borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Text(
-            "Sign in", 
+            "Sign in",
             style: mystyle(18, white, FontWeight.w400),
           ),
         ),
@@ -213,26 +202,22 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     // Button for Joining Meeting directly as a Guest
     //------------------------------------------------------------------------
     var joinMeetingButton = InkWell(
-      onTap: ()=> Navigator.push(
-        context, 
-        MaterialPageRoute(
-          builder: (context)=> JoinWithoutLogin()
-        )
-      ),
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => JoinWithoutLogin())),
       child: Container(
-        width: MediaQuery.of(context).size.width/1.4,
+        width: MediaQuery.of(context).size.width / 1.4,
         height: 42,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: purpleSecondary,
+            color: blueSecondary,
             width: 2,
           ),
         ),
         child: Center(
           child: Text(
-            "Join a meeting", 
-            style: mystyle(18, purpleSecondary, FontWeight.w400),
+            "Join a meeting",
+            style: mystyle(18, blueSecondary, FontWeight.w400),
           ),
         ),
       ),
@@ -243,26 +228,22 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     // It naviagates to registration-screen when clicked
     //------------------------------------------------------------------------
     var signUpButton = InkWell(
-      onTap: ()=> Navigator.push(
-        context, 
-        MaterialPageRoute(
-          builder: (context)=> RegisterScreen()
-        )
-      ),
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => RegisterScreen())),
       child: Container(
-        width: MediaQuery.of(context).size.width/1.4,
+        width: MediaQuery.of(context).size.width / 1.4,
         height: 42,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: purpleSecondary,
+            color: blueSecondary,
             width: 2,
           ),
         ),
         child: Center(
           child: Text(
-            "Sign up for free", 
-            style: mystyle(18, purpleSecondary, FontWeight.w400),
+            "Sign up for free",
+            style: mystyle(18, blueSecondary, FontWeight.w400),
           ),
         ),
       ),
@@ -307,44 +288,45 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
 
     return Scaffold(
       backgroundColor: greyLight,
-      body: isInProgress? Center(
-        child: CircularProgressIndicator(
-          color: purpleSecondary,
-        ),
-      ) : Stack(
-        children: [
-          videoLogoImageContainer,
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 1.5,
-              margin: EdgeInsets.only(left:30, right:30),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 5,
-                    offset: const Offset(0,3),
+      body: isInProgress
+          ? Center(
+              child: CircularProgressIndicator(
+                color: blueSecondary,
+              ),
+            )
+          : Stack(
+              children: [
+                videoLogoImageContainer,
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 1.5,
+                    margin: EdgeInsets.only(left: 30, right: 30),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                      color: white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                    ),
+                    child: Column(
+                      children: [
+                        signInButtonColumn,
+                        signUpButtonColumn,
+                      ],
+                    ),
                   ),
-                ],
-                color: white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20)
                 ),
-              ),
-              child: Column(
-                children: [
-                  signInButtonColumn,
-                  signUpButtonColumn,
-                ],
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

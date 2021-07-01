@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------
-// This is the Home page 
+// This is the Home page
 // It has a Bottom Navigation Bar
 // So that User can switch between Video Conference and Profile Page
 //------------------------------------------------------------------------
@@ -11,15 +11,14 @@ import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({ Key? key }) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
   int page = 0;
-  List pageOptions = [ VideoConferenceScreen(), ProfileScreen()];
+  List pageOptions = [VideoConferenceScreen(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +26,12 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: greyLight,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: white,
-        selectedItemColor: purpleSecondary,
-        selectedLabelStyle: mystyle(17, purpleSecondary),
+        selectedItemColor: blueSecondary,
+        selectedLabelStyle: mystyle(17, blueSecondary),
         unselectedItemColor: black,
         unselectedLabelStyle: mystyle(17, black),
         currentIndex: page,
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             page = index;
           });

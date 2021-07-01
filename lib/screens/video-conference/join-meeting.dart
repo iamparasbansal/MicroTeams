@@ -9,14 +9,13 @@ import 'package:microteams/utils/variables.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class JoinMeeting extends StatefulWidget {
-  const JoinMeeting({ Key? key }) : super(key: key);
+  const JoinMeeting({Key? key}) : super(key: key);
 
   @override
   _JoinMeetingState createState() => _JoinMeetingState();
 }
 
 class _JoinMeetingState extends State<JoinMeeting> {
-
   TextEditingController roomController = TextEditingController();
   bool? isVideoMuted = true;
   bool? isAudioMuted = true;
@@ -33,72 +32,66 @@ class _JoinMeetingState extends State<JoinMeeting> {
   // Function to get User Data from Firestore Database
   //------------------------------------------------------------------------
   getUserData() async {
-    DocumentSnapshot userDoc = await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-     setState((){
-       name = (userDoc.data() as dynamic)['name'];
-       email = (userDoc.data() as dynamic)['email'];
-     });
+    DocumentSnapshot userDoc =
+        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+    setState(() {
+      name = (userDoc.data() as dynamic)['name'];
+      email = (userDoc.data() as dynamic)['email'];
+    });
   }
 
-
-  joinMeetingFunction() async{
-
-    try{
+  joinMeetingFunction() async {
+    try {
       Map<FeatureFlagEnum, bool> featureFlags = {
-        FeatureFlagEnum.WELCOME_PAGE_ENABLED : false
+        FeatureFlagEnum.WELCOME_PAGE_ENABLED: false
       };
 
-      if (Platform.isAndroid){
+      if (Platform.isAndroid) {
         featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
       } else if (Platform.isIOS) {
         featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
       }
 
       var options = JitsiMeetingOptions(room: roomController.text)
-      ..serverURL = "https://microteams.tech"
-      ..userDisplayName = name
-      ..userEmail = email
-      ..audioMuted = isAudioMuted
-      ..videoMuted = isVideoMuted
-      ..featureFlags.addAll(featureFlags);
-    
+        ..serverURL = "https://microteams.tech"
+        ..userDisplayName = name
+        ..userEmail = email
+        ..audioMuted = isAudioMuted
+        ..videoMuted = isVideoMuted
+        ..featureFlags.addAll(featureFlags);
+
       await JitsiMeet.joinMeeting(options);
-    } catch(e) {
+    } catch (e) {
       print("Error: $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     var joinMeetingButton = InkWell(
-      onTap: (){
-        joinMeetingFunction();
-      },
-      child: Container(
-        width: double.maxFinite,
-        height: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: purpleSecondary,
-        ),
-        child: Center(
-          child: Text(
-            "Join Meeting",
-            style: mystyle(20, white, FontWeight.w500),
+        onTap: () {
+          joinMeetingFunction();
+        },
+        child: Container(
+          width: double.maxFinite,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: blueSecondary,
           ),
-        ),
-      )
-    );
-
+          child: Center(
+            child: Text(
+              "Join Meeting",
+              style: mystyle(20, white, FontWeight.w500),
+            ),
+          ),
+        ));
 
     return Scaffold(
       backgroundColor: greyLight,
       body: Center(
         child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 25
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 25),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -110,12 +103,10 @@ class _JoinMeetingState extends State<JoinMeeting> {
                 ),
                 mySizedBox(30),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: PinCodeTextField(
                     controller: roomController,
-                    appContext: context, 
+                    appContext: context,
                     length: 6,
                     cursorColor: black,
                     autoDisposeControllers: false,
@@ -123,43 +114,39 @@ class _JoinMeetingState extends State<JoinMeeting> {
                     animationType: AnimationType.fade,
                     pinTheme: PinTheme(
                       shape: PinCodeFieldShape.underline,
-                      inactiveColor: purpleSecondary,
-                      activeColor: purpleSecondary,
+                      inactiveColor: blueSecondary,
+                      activeColor: blueSecondary,
                       selectedColor: black,
                       fieldHeight: 35,
-                    ), 
+                    ),
                     animationDuration: Duration(milliseconds: 200),
-                    onChanged: (value){},
+                    onChanged: (value) {},
                   ),
                 ),
                 mySizedBox(20),
                 CheckboxListTile(
                   value: isVideoMuted,
-                  activeColor: purpleSecondary, 
+                  activeColor: blueSecondary,
                   dense: true,
-                  onChanged: (value){
+                  onChanged: (value) {
                     setState(() {
                       isVideoMuted = value;
                     });
                   },
-                  title: Text(
-                    "Video Muted", 
-                    style: mystyle(18, black, FontWeight.w500)
-                  ),
+                  title: Text("Video Muted",
+                      style: mystyle(18, black, FontWeight.w500)),
                 ),
                 CheckboxListTile(
                   value: isAudioMuted,
-                  activeColor: purpleSecondary, 
-                  dense: true, 
-                  onChanged: (value){
+                  activeColor: blueSecondary,
+                  dense: true,
+                  onChanged: (value) {
                     setState(() {
                       isAudioMuted = value;
                     });
                   },
-                  title: Text(
-                    "Audio Muted", 
-                    style: mystyle(18, black, FontWeight.w500)
-                  ),
+                  title: Text("Audio Muted",
+                      style: mystyle(18, black, FontWeight.w500)),
                 ),
                 Divider(
                   height: 48,

@@ -12,14 +12,13 @@ import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({ Key? key }) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   String name = "";
   bool dataIsThere = false;
 
@@ -33,27 +32,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // Function to get User Data from Firestore Database
   //------------------------------------------------------------------------
   getUserData() async {
-    DocumentSnapshot userDoc = await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-     setState((){
-       name = (userDoc.data() as dynamic)['name'];
-       dataIsThere = true;
-     });
+    DocumentSnapshot userDoc =
+        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+    setState(() {
+      name = (userDoc.data() as dynamic)['name'];
+      dataIsThere = true;
+    });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     //------------------------------------------------------------------------
-    // Circular Purple Clip at Top of Profile Page
+    // Circular blue Clip at Top of Profile Page
     //------------------------------------------------------------------------
     var clipPath = ClipPath(
       clipper: OvalBottomBorderClipper(),
       child: Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height/2.5,
-        decoration: BoxDecoration(
-          color: purpleSecondary
-        ),
+        height: MediaQuery.of(context).size.height / 2.5,
+        decoration: BoxDecoration(color: blueSecondary),
       ),
     );
 
@@ -61,40 +58,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // User Profile Pic Container
     //------------------------------------------------------------------------
     var circleAvatar = Container(
-      margin: EdgeInsets.only(
-        left: (MediaQuery.of(context).size.width / 2)-50,
-        top: MediaQuery.of(context).size.height / 3.1,
-      ),
-      child:Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          color: greyLight,
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image:  AssetImage('images/profile.png'),
-          ),
+        margin: EdgeInsets.only(
+          left: (MediaQuery.of(context).size.width / 2) - 50,
+          top: MediaQuery.of(context).size.height / 3.1,
         ),
-      )
-    );
+        child: Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            color: greyLight,
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: AssetImage('images/profile.png'),
+            ),
+          ),
+        ));
 
     //------------------------------------------------------------------------
     // Button to provide Edit Profile Functionality
     //------------------------------------------------------------------------
     var editProfileButton = InkWell(
-      onTap: () => Navigator.push(
-        context, 
-        MaterialPageRoute(
-          builder: (context)=> EditProfileScreen()
-        )
-      ),
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => EditProfileScreen())),
       child: Container(
-        width: MediaQuery.of(context).size.width/2,
+        width: MediaQuery.of(context).size.width / 2,
         height: 40,
         decoration: BoxDecoration(
-          color: purpleSecondary,
-          borderRadius: BorderRadius.circular(10)
-        ),
+            color: blueSecondary, borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Text(
             "Edit Profile",
@@ -108,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Logout Button
     //------------------------------------------------------------------------
     var logoutButton = InkWell(
-      onTap: (){
+      onTap: () {
         FirebaseAuth.instance.signOut();
         Navigator.push(
           context,
@@ -116,12 +106,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       },
       child: Container(
-        width: MediaQuery.of(context).size.width/2,
+        width: MediaQuery.of(context).size.width / 2,
         height: 40,
         decoration: BoxDecoration(
-          color: purpleSecondary,
-          borderRadius: BorderRadius.circular(10)
-        ),
+            color: blueSecondary, borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Text(
             "Logout",
@@ -130,36 +118,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-    
+
     return Scaffold(
       backgroundColor: greyLight,
-      body: dataIsThere == false ? Center(
-        child: CircularProgressIndicator(
-          color: purpleSecondary,
-        ),
-      ) : Stack(
-        children: [
-          clipPath,
-          circleAvatar,
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: dataIsThere == false
+          ? Center(
+              child: CircularProgressIndicator(
+                color: blueSecondary,
+              ),
+            )
+          : Stack(
               children: [
-                mySizedBox(300),
-                Text(
-                  name,
-                  style: mystyle(40, black),
-                  textAlign: TextAlign.center,
+                clipPath,
+                circleAvatar,
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      mySizedBox(300),
+                      Text(
+                        name,
+                        style: mystyle(40, black),
+                        textAlign: TextAlign.center,
+                      ),
+                      mySizedBox(30),
+                      editProfileButton,
+                      mySizedBox(30),
+                      logoutButton,
+                    ],
+                  ),
                 ),
-                mySizedBox(30),
-                editProfileButton,
-                mySizedBox(30),
-                logoutButton,
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
