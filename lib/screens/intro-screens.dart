@@ -24,7 +24,7 @@ class _IntroAuthScreenState extends State<IntroAuthScreen> {
       title: "Welcome",
       body: "Welcome to MicroTeams, the best video conference app",
       image: Center(
-        child: Image.asset('images/welcome.png', height: 200),
+        child: Image.asset('images/welcome.png', height: 250),
       ),
       decoration: PageDecoration(
         bodyTextStyle: mystyle(20, black),
@@ -38,7 +38,7 @@ class _IntroAuthScreenState extends State<IntroAuthScreen> {
       title: "Join or Start meetings",
       body: "Easy to use interface, join or start meetings in a fast time",
       image: Center(
-        child: Image.asset('images/conference.png', height: 250),
+        child: Image.asset('images/conference.png', height: 240),
       ),
       decoration: PageDecoration(
           bodyTextStyle: mystyle(20, black),
@@ -52,7 +52,7 @@ class _IntroAuthScreenState extends State<IntroAuthScreen> {
       body:
           "Your security is important for us. Our servers are secure and reliable",
       image: Center(
-        child: Image.asset('images/secure.png', height: 280),
+        child: Image.asset('images/secure.png', height: 240),
       ),
       decoration: PageDecoration(
           bodyTextStyle: mystyle(20, black),

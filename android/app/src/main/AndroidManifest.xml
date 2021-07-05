@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.microteams" xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         tools:replace="android:label"
-        android:label="microteams"
+        android:label="MicroTeams"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

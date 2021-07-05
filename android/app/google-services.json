@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "69759200454-8vfpdqc1pdkpaop8d21svgsh1pkfh7ba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microteams",
+            "certificate_hash": "8a1f49a4edf8a102ac4b360ceb12fa4059884d97"
+          }
+        },
+        {
           "client_id": "69759200454-5h3h988upbgt5immbf3246bitdobdj3t.apps.googleusercontent.com",
           "client_type": 3
         }
