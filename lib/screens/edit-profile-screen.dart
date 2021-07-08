@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:microteams/screens/auth-screen.dart';
 import 'package:microteams/screens/home-page.dart';
 import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
@@ -23,6 +24,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool dataIsThere = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  bool isInProgress = false;
+  final auth = FirebaseAuth.instance;
 
   //------------------------------------------------------------------------
   // Function to get User Data from Firestore Database
@@ -39,16 +42,59 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   _showAlertDialog(errorMsg) {
     return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              'Update Failed',
-              style: TextStyle(color: black),
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Update Failed',
+            style: TextStyle(color: black),
+          ),
+          content: Text(errorMsg),
+        );
+      }
+    );
+  }
+
+   _showAlertDialogChangePassword(errorTitle, errorMsg) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            errorTitle,
+            style: TextStyle(color: black),
+          ),
+          content: Text(errorMsg),
+          actions: [
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            content: Text(errorMsg),
-          );
-        });
+          ],
+        );
+      }
+    );
+  }
+
+  //------------------------------------------------------------------------
+  // This function hadles the click on Change Password Button
+  //------------------------------------------------------------------------
+  _changePassword() async {
+    DocumentSnapshot userDoc =
+      await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+    setState(() {
+      isInProgress = true;
+    });
+    auth.sendPasswordResetEmail(email: (userDoc.data() as dynamic)['email']);
+    setState(() {
+      isInProgress = false;
+    });
+    _showAlertDialogChangePassword(
+      "Link sent", 
+      "Please click the link sent on your email and continue to change the password."
+    );
   }
 
   //------------------------------------------------------------------------
@@ -62,7 +108,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({'name': nameController.text, 'email': emailController.text});
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+        context, MaterialPageRoute(
+          builder: (context) => HomePage()
+        )
+      );
     }
   }
 
@@ -77,12 +126,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ));
 
     var orText = Container(
-        padding: EdgeInsets.only(left: 30, right: 30, bottom: 10),
-        child: Text(
-          "OR",
-          style: mystyle(20, black, FontWeight.w600),
-          textAlign: TextAlign.center,
-        ));
+      padding: EdgeInsets.only(left: 30, right: 30, bottom: 10),
+      child: Text(
+        "OR",
+        style: mystyle(20, black, FontWeight.w600),
+        textAlign: TextAlign.center,
+      )
+    );
 
     var updateNowButton = InkWell(
       onTap: () {
@@ -104,7 +154,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     //------------------------------------------------------------------------
     var changePasswordButton = InkWell(
-      onTap: () {},
+      onTap: () {
+        _changePassword();
+      },
       child: Container(
         width: MediaQuery.of(context).size.width / 1.4,
         height: 40,

@@ -3,7 +3,6 @@ import '../enums/auth-result-status.dart';
 
 class AuthExceptionHandler {
   static handleException(e) {
-    print("Paras BAnsal Jai Mata Di");
     print(e.code);
     var status;
     switch (e.code) {

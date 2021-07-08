@@ -2,13 +2,14 @@
 // This is the main Authentication Screen
 // It handles the Signin Logic
 //------------------------------------------------------------------------
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:microteams/screens/join-without-login-screen.dart';
 import 'package:microteams/screens/register-screen.dart';
 import 'package:microteams/enums/auth-result-status.dart';
 import 'package:microteams/screens/home-page.dart';
 import 'package:microteams/authentication/auth-exception-handler.dart';
 import 'package:microteams/authentication/firebase-auth-helper.dart';
+import 'package:microteams/screens/reset-password.dart';
 import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
@@ -42,15 +43,18 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
   // This function hadles the click on Signin Button
   //------------------------------------------------------------------------
   _login() async {
-    {
-      setState(() {
-        isInProgress = true;
-      });
-      final status = await FirebaseAuthHelper().login(
-          email: emailcontroller.text, password: passwordcontroller.text);
-      setState(() {
-        isInProgress = false;
-      });
+    setState(() {
+      isInProgress = true;
+    });
+    final status = await FirebaseAuthHelper().login(
+      email: emailcontroller.text, password: passwordcontroller.text
+    );
+    setState(() {
+      isInProgress = false;
+    });
+    if(FirebaseAuth.instance.currentUser!=null && FirebaseAuth.instance.currentUser!.emailVerified==false){
+      _showAlertDialog("Your email isn't verified yet. Please verify it.");
+    }else{
       if (status == AuthResultStatus.successful) {
         Navigator.push(
           context,
@@ -201,22 +205,18 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
     //------------------------------------------------------------------------
     // Button for Joining Meeting directly as a Guest
     //------------------------------------------------------------------------
-    var joinMeetingButton = InkWell(
+    var forgetPasswordButton = InkWell(
       onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => JoinWithoutLogin())),
+        context, MaterialPageRoute(
+          builder: (context) => ResetScreen()
+        )
+      ),
       child: Container(
         width: MediaQuery.of(context).size.width / 1.4,
         height: 42,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: blueSecondary,
-            width: 2,
-          ),
-        ),
         child: Center(
           child: Text(
-            "Join a meeting",
+            "Forgot password?",
             style: mystyle(18, blueSecondary, FontWeight.w400),
           ),
         ),
@@ -278,7 +278,7 @@ class _NavigateAuthScreenState extends State<NavigateAuthScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          joinMeetingButton,
+          forgetPasswordButton,
           mySizedBox(10),
           signUpButton,
           mySizedBox(20),

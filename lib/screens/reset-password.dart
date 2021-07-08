@@ -1,28 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:microteams/enums/auth-result-status.dart';
-import 'package:microteams/authentication/auth-exception-handler.dart';
-import 'package:microteams/authentication/firebase-auth-helper.dart';
 import 'package:microteams/screens/auth-screen.dart';
 import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+class ResetScreen extends StatefulWidget {
+  const ResetScreen({Key? key}) : super(key: key);
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _ResetScreenState createState() => _ResetScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _ResetScreenState extends State<ResetScreen> {
   TextEditingController emailcontroller = TextEditingController();
-  TextEditingController passwordcontroller = TextEditingController();
-  TextEditingController namecontroller = TextEditingController();
   bool isInProgress = false;
   final auth = FirebaseAuth.instance;
-  User? user;
 
-  _showAlertDialogSignupFail(errorTitle, errorMsg) {
+  _showAlertDialogChangePasswordFail(errorTitle, errorMsg) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -37,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  _showAlertDialogVerifyEmail(errorTitle, errorMsg) {
+  _showAlertDialogChangePassword(errorTitle, errorMsg) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -64,49 +58,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  _verifyEmailAddress() async {
-    user = auth.currentUser;
-    user!.sendEmailVerification();
-    _showAlertDialogVerifyEmail(
-      "Verify your Email",
-      "A verify link has been sent to ${user!.email} please verify and then login."
-    );
-  }
-
   //------------------------------------------------------------------------
-  // This function hadles the click on Signup Button
+  // This function hadles the click on Change Password Button
   //------------------------------------------------------------------------
-  _createAccount() async {
-    if (namecontroller.text == '') {
-      _showAlertDialogSignupFail(
-        "Signup Failed",
-        "Name field is empty, please fill it."
+  _changePassword() async {
+    if (emailcontroller.text == '') {
+      _showAlertDialogChangePasswordFail(
+        "Change Password Failed",
+        "Email field is empty, please fill it."
       );
     } else {
       setState(() {
         isInProgress = true;
       });
-      final status = await FirebaseAuthHelper().createAccount(
-        email: emailcontroller.text,
-        password: passwordcontroller.text,
-        name: namecontroller.text
-      );
+      auth.sendPasswordResetEmail(email: emailcontroller.text);
       setState(() {
         isInProgress = false;
       });
-      if (status == AuthResultStatus.successful) {
-        _verifyEmailAddress();
-      } else {
-        final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
-        _showAlertDialogSignupFail("Signup Failed", errorMsg);
-      }
+      _showAlertDialogChangePassword(
+        "Link sent", 
+        "Please click the link sent on your email and continue to change the password."
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     //------------------------------------------------------------------------
-    // This is the container that appears on top of Signup Screen
+    // This is the container that appears on top of changePassword Screen
     // It includes brand name and the video logo
     // Covers half of the background screen
     //------------------------------------------------------------------------
@@ -141,31 +120,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     //------------------------------------------------------------------------
-    // Name Text Field to get user input of name for new account
+    // General Text, i.e.,
+    // Get Started with your work, school, or personal email
     //------------------------------------------------------------------------
-    var nameTextField = Container(
-      width: MediaQuery.of(context).size.width / 1.4,
-      height: 42,
-      child: TextField(
-        style: mystyle(18, black, FontWeight.w400),
-        keyboardType: TextInputType.emailAddress,
-        controller: namecontroller,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(
-              left: 10,
-              bottom: 21, // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: blueSecondary, width: 2.0),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            hintText: "Name",
-            hintStyle: mystyle(18, grey, FontWeight.w400)),
+    var generalText = SizedBox(
+      width: MediaQuery.of(context).size.width / 1.5,
+      child: Container(
+        child: Text(
+          'Please enter your Email',
+          style: mystyle(20, black, FontWeight.w400),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
+
 
     //------------------------------------------------------------------------
     // Email Text Field to get user input of email for new account
@@ -195,40 +163,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     //------------------------------------------------------------------------
-    // Password Text Field
-    // Users will enter there new account password here in order to signup
+    // Change Password Button
     //------------------------------------------------------------------------
-    var passwordTextField = Container(
-      width: MediaQuery.of(context).size.width / 1.4,
-      height: 42,
-      child: TextField(
-        style: mystyle(18, black, FontWeight.w400),
-        keyboardType: TextInputType.emailAddress,
-        obscureText: true,
-        controller: passwordcontroller,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(
-              left: 10,
-              bottom: 21, // THIS MARGIN SHOULD BE HALF OF THE HEIGHT PROVIDED
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: blueSecondary, width: 2.0),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            hintText: "Password",
-            hintStyle: mystyle(18, grey, FontWeight.w400)),
-      ),
-    );
-
-    //------------------------------------------------------------------------
-    // Sign Up Button
-    //------------------------------------------------------------------------
-    var signUpButton = InkWell(
+    var changePasswordButton = InkWell(
       onTap: () {
-        _createAccount();
+        _changePassword();
       },
       child: Container(
         width: MediaQuery.of(context).size.width / 1.4,
@@ -241,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Text(
-            "Sign up",
+            "Change password",
             style: mystyle(18, white, FontWeight.w400),
           ),
         ),
@@ -249,18 +188,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     //------------------------------------------------------------------------
-    // Column to wrap text fields and signup button
+    // Column to wrap text fields and Change Password button
     //------------------------------------------------------------------------
-    var signUpColumn = Column(
+    var changePasswordColumn = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        nameTextField,
-        mySizedBox(10),
-        emailTextField,
-        mySizedBox(10),
-        passwordTextField,
+        generalText,
         mySizedBox(20),
-        signUpButton,
+        emailTextField,
+        mySizedBox(20),
+        changePasswordButton,
       ],
     );
 
@@ -281,7 +218,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: BoxDecoration(
                       color: white,
                     ),
-                    child: signUpColumn,
+                    child: changePasswordColumn,
                   ),
                 ),
               ],
