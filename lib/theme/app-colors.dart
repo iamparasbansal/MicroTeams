@@ -1,3 +1,7 @@
+//---------------------------------------------------------------
+// All colors used in the application are defined here
+//---------------------------------------------------------------
+
 import 'package:flutter/material.dart';
 
 const blueSecondary = Color(0xff0077E1);

@@ -7,6 +7,10 @@ import 'package:microteams/screens/intro-screens.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
+  //---------------------------------------------------------------
+  // Initialize the Firebase and env variables
+  // Also set app preffered orientation to be potrait only
+  //---------------------------------------------------------------
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
   await Firebase.initializeApp();
@@ -17,10 +21,11 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  //-------------------------------------------------------------
+  // This widget is the root of application.
+  //-------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
-    //print(FlutterConfig.get('FIREBASE_API_KEY'));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: NavigationPage(),
@@ -42,6 +47,9 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   void initState() {
     super.initState();
+    //---------------------------------------------------------------
+    // This checks if the user is Signed in or not on launch
+    //---------------------------------------------------------------
     FirebaseAuth.instance.authStateChanges().listen((user){
       if(user!=null){
         setState(() {

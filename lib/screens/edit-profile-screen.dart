@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:microteams/screens/auth-screen.dart';
 import 'package:microteams/screens/home-page.dart';
 import 'package:microteams/theme/app-colors.dart';
 import 'package:microteams/utils/variables.dart';
@@ -50,6 +49,42 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             style: TextStyle(color: black),
           ),
           content: Text(errorMsg),
+        );
+      }
+    );
+  }
+
+  _showAlertDialogUpdateProfile(errorMsg) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Confirm Update',
+            style: TextStyle(color: black),
+          ),
+          content: Text(errorMsg),
+          actions: [
+            TextButton(
+              child: const Text('Update'),
+              onPressed: () {
+                userCollection
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .update({'name': nameController.text, 'email': emailController.text});
+                Navigator.push(
+                  context, MaterialPageRoute(
+                    builder: (context) => HomePage()
+                  )
+                );
+              },
+            ),
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         );
       }
     );
@@ -104,13 +139,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (nameController.text == '' || emailController.text == '') {
       _showAlertDialog("All fields are required. Please fill them all.");
     } else {
-      userCollection
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .update({'name': nameController.text, 'email': emailController.text});
-      Navigator.push(
-        context, MaterialPageRoute(
-          builder: (context) => HomePage()
-        )
+      _showAlertDialogUpdateProfile(
+        "Please press the update button to update your changes (No changes"+
+        " will be made if you haven't altered any field). Otherwise press cancel."
       );
     }
   }
@@ -153,6 +184,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
 
     //------------------------------------------------------------------------
+    // A link on the email will be sent to change the password
+    //------------------------------------------------------------------------
     var changePasswordButton = InkWell(
       onTap: () {
         _changePassword();
@@ -171,6 +204,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
 
+    //------------------------------------------------------------------------
     // Name Text Field to get user input of new Name of user
     //------------------------------------------------------------------------
     var nameTextField = Container(
@@ -197,6 +231,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
 
+    //------------------------------------------------------------------------
+    // Email Text Field to get user's new email
+    //------------------------------------------------------------------------
     var emailTextField = Container(
       width: MediaQuery.of(context).size.width / 1.4,
       height: 42,

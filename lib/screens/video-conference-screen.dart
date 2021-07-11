@@ -15,6 +15,9 @@ class _VideoConferenceScreenState extends State<VideoConferenceScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
+  //---------------------------------------------------------------
+  // Customize the Home Page Tab Styling
+  //---------------------------------------------------------------
   buildtab(String name) {
     return Container(
       width: 150,
@@ -30,11 +33,19 @@ class _VideoConferenceScreenState extends State<VideoConferenceScreen>
   @override
   void initState() {
     super.initState();
+    //---------------------------------------------------------------
+    //Initialize the Tab Controllers for Video Page, i.e,
+    // Join Meeting Tab and Create Meeting Tab
+    //---------------------------------------------------------------
     tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
+
+    //---------------------------------------------------------------
+    // APPBAR on Home page that has join and create meeting tabs.
+    //---------------------------------------------------------------
     var appBar = AppBar(
       centerTitle: true,
       backgroundColor: blueSecondary,
