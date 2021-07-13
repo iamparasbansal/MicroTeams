@@ -51,7 +51,11 @@ class _NavigationPageState extends State<NavigationPage> {
     // This checks if the user is Signed in or not on launch
     //---------------------------------------------------------------
     FirebaseAuth.instance.authStateChanges().listen((user){
-      if(user!=null){
+      if(
+        user!=null && 
+        FirebaseAuth.instance.currentUser!=null && 
+        FirebaseAuth.instance.currentUser!.emailVerified==true
+      ){
         setState(() {
           isSigned = true;
         });
