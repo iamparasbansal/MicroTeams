@@ -1,5 +1,7 @@
 # What is Microteams?
 
+![Mockup](https://i.ibb.co/R9ysR3Z/mockup.jpg)
+
 MicroTeams is a web conferencing system built under Microsoft Engage'21 programe.
 MicroTeams provides you all the core features you would expect from a commercial web conferencing system. It is built from a collection of Open Source projects (Jitsi, Jibri, JVB, Jigasi etc.) which provide state-of-the-art video conferencing capabilities that are secure and easy to use.
 
