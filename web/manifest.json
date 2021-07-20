@@ -1,23 +1,36 @@
 {
-    "name": "microteams",
-    "short_name": "microteams",
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
-    "prefer_related_applications": false,
-    "icons": [
-        {
-            "src": "icons/Icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/Icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ]
-}
+  "android_package_name": "org.jitsi.meet",
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "id": "org.jitsi.meet",
+      "platform": "chromeos_play"
+    }
+  ],
+  "short_name": "MicroTeams Meet",
+  "name": "MicroTeams Meet",
+  "icons": [
+    {
+      "src": "static/pwa/icons/icon192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "static/pwa/icons/icon512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "static/pwa/icons/iconMask.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#17A0DB",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#17A0DB"
+ }
+ 
