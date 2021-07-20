@@ -50,10 +50,10 @@ The content of this documentation is divided in 3 main areas:
 
 ## Important Links 
 
-Web URL -> https://microteams.tech
-Android apk link -> https://bit.ly/3efHnF9
-Documentation website -> https://microteamsdocs.netlify.app
-Github URL -> https://github.com/iamparasbansal/microteams
-This PPT Link -> https://file.io/BON6xwb5ED0p
-Video Demo link -> https://drive.google.com/file/d/1sif3LBk6Gm5gnLVUtw3KX-1acTOguwyY/view?usp=sharing
+Web URL -> https://microteams.tech <br/>
+Android apk link -> https://bit.ly/3efHnF9 <br/>
+Documentation website -> https://microteamsdocs.netlify.app <br/>
+Github URL -> https://github.com/iamparasbansal/microteams <br/>
+This PPT Link -> https://file.io/BON6xwb5ED0p <br/>
+Video Demo link -> https://drive.google.com/file/d/1sif3LBk6Gm5gnLVUtw3KX-1acTOguwyY/view?usp=sharing <br/>
 
