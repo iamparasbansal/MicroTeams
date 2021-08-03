@@ -1,5 +1,7 @@
 # What is Microteams?
 
+### NOTE: Microsoft servers are currently depreciated. 
+
 ![Mockup](https://i.ibb.co/R9ysR3Z/mockup.jpg)
 
 MicroTeams is a web conferencing system built under Microsoft Engage'21 programe.
