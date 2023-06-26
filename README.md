@@ -1,6 +1,14 @@
-# What is Microteams?
+# MicroTeams
 
-### NOTE: Microsoft servers are currently depreciated. 
+### NOTE: MicroTeams servers are currently depreciated. 
+### Important Links 
+Web URL -> https://microteams.tech <br/> (domain not in use)
+Android apk link -> https://bit.ly/3efHnF9 <br/>
+Documentation website -> https://microteamsdocs.netlify.app <br/>
+Github URL -> https://github.com/iamparasbansal/microteams <br/>
+PPT Link -> https://easyupload.io/42j389 <br/>
+Video Demo link -> https://drive.google.com/file/d/1sif3LBk6Gm5gnLVUtw3KX-1acTOguwyY/view?usp=sharing <br/>
+
 
 ![Mockup](https://i.ibb.co/R9ysR3Z/mockup.jpg)
 
@@ -51,13 +59,4 @@ The content of this documentation is divided in 3 main areas:
 * <b>Mobile app:</b> Designed to help users of the mobile app service, to better understand all the available features.
 * <b>Web app:</b> Designed to help users of the web app service, to better understand all the available features.
 * <b>Development procedure:</b> Designed for folks wanting to self-host, system administrators or anyone who wishes to understand development procedure of MicroTeams.
-
-## Important Links 
-
-Web URL -> https://microteams.tech <br/>
-Android apk link -> https://bit.ly/3efHnF9 <br/>
-Documentation website -> https://microteamsdocs.netlify.app <br/>
-Github URL -> https://github.com/iamparasbansal/microteams <br/>
-PPT Link -> https://easyupload.io/42j389 <br/>
-Video Demo link -> https://drive.google.com/file/d/1sif3LBk6Gm5gnLVUtw3KX-1acTOguwyY/view?usp=sharing <br/>
 
