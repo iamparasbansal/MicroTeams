@@ -1,12 +1,11 @@
 # MicroTeams
 
-### NOTE: MicroTeams servers are currently depreciated. 
 ### Important Links 
-Web URL -> https://microteams.tech (domain not in use) <br/> 
+Note: MicroTeams servers are currently depreciated (they were hosted under free plan). 
+Website -> (domain not in use anymore)
 Android apk link -> https://bit.ly/3efHnF9 <br/>
 Documentation website -> https://microteamsdocs.netlify.app <br/>
-PPT Link -> https://easyupload.io/42j389 <br/>
-Video Demo link -> https://drive.google.com/file/d/1sif3LBk6Gm5gnLVUtw3KX-1acTOguwyY/view?usp=sharing <br/>
+Video Demo link -> https://bit.ly/2W3L4HY <br/>
 
 
 ![Mockup](https://i.ibb.co/R9ysR3Z/mockup.jpg)
